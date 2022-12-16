@@ -9,7 +9,7 @@ export default function CoffeeModal(props: any) {
         <>
             <div className="flex max-w-xs w-64 flex-col gap-4 rounded-xl bg-black/10 p-4 text-black hover:bg-black/20" onClick={() => setShowModal(true)}>
                 <div>
-                    <h3 className="text-2xl font-bold text-black">/{coffee?.name}</h3>
+                    <h3 className="text-2xl justify-left font-bold text-black">/{coffee?.name}</h3>
                     <div className="p-5">
                         <Image
                             src="/coffee-cup.png"
@@ -34,20 +34,15 @@ export default function CoffeeModal(props: any) {
                                     <h3 className="text-3xl font-semibold">
                                         ☕ /{coffee?.name}
                                     </h3>
-                                    <button
-                                        className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                            ×
-                                        </span>
-                                    </button>
                                 </div>
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
-                                    <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                                        text
-                                    </p>
+                                    <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-neutral-600 bg-neutral-200 uppercase last:mr-0 mr-1">
+                                        {coffee?.maker ?? ''}
+                                    </span>
+                                    <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-neutral-600 bg-neutral-200 uppercase last:mr-0 mr-1">
+                                        {coffee?.maker ?? ''}
+                                    </span>
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

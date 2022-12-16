@@ -7,10 +7,6 @@ import CoffeeModal from "../components/CoffeeModal"
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
-  const coffeeList = trpc.coffee.getAll.useQuery();
-  const coffeeMutation = trpc.coffee.create.useMutation()
-
   return (
     <>
       <Head>
@@ -23,20 +19,8 @@ const Home: NextPage = () => {
           <h1 className="text-5xl font-extrabold tracking-tight text-black sm:text-[5rem]">
             Coffee<span className="text-[hsl(15,42%,35%)]">Mate☕</span>
           </h1>
-          <div>
-            <AddCoffee coffeeMutation={coffeeMutation} />
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            {coffeeList?.data?.map((coffee, idx) => (
-              <div key={idx}>
-                <CoffeeModal data={coffee} />
-              </div>
-            ))}
-          </div>
+
           <div className="flex flex-col items-center gap-2">
-            <p className="text-md text-black">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
             <AuthShowcase />
           </div>
         </div>
@@ -49,6 +33,7 @@ export default Home;
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
+  const coffeeList = trpc.coffee.getAll.useQuery();
 
   const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
     undefined, // no input
@@ -57,18 +42,28 @@ const AuthShowcase: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
+      <button
+        className="my-4 rounded-full bg-black/10 px-10 py-3 font-semibold text-black no-underline transition hover:bg-pink-500"
+        onClick={sessionData ? () => signOut() : () => signIn()}
+      >
+        {sessionData ? "Sign out 👋" : "Sign in"}
+      </button>
       <p className="text-center text-2xl text-black">
         {sessionData && <span>Welcome back <b>{sessionData.user?.name}</b></span>}
       </p>
       <p>
         {secretMessage && <span>{secretMessage}</span>}
       </p>
-      <button
-        className="rounded-full bg-black/10 px-10 py-3 font-semibold text-black no-underline transition hover:bg-pink-500"
-        onClick={sessionData ? () => signOut() : () => signIn()}
-      >
-        {sessionData ? "Sign out 👋" : "Sign in"}
-      </button>
+      <div className="py-5">
+        {sessionData && <AddCoffee />}
+      </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
+        {sessionData && coffeeList?.data?.map((coffee, idx) => (
+          <div key={idx}>
+            <CoffeeModal data={coffee} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,8 +1,14 @@
 import React from "react";
 import { trpc } from "../utils/trpc";
 
-export default function AddCoffee(props: any) {
+export default function AddCoffee() {
+    const utils = trpc.useContext();
     const [showModal, setShowModal] = React.useState(false);
+    const coffeeMutation = trpc.coffee.create.useMutation({
+        onSuccess(data, variables, ctx) {
+            utils.coffee.getAll.invalidate();
+        },
+    })
 
     const submitContact = async (event: any) => {
         event.preventDefault();
@@ -11,7 +17,7 @@ export default function AddCoffee(props: any) {
             roast: `${event.target.roast.value}`,
             maker: `${event.target.maker.value}`
         }
-        props.coffeeMutation.mutate(coffee);
+        coffeeMutation.mutate(coffee);
         setShowModal(false)
     };
 
@@ -50,34 +56,40 @@ export default function AddCoffee(props: any) {
                                 <form className="flex flex-col" onSubmit={submitContact}>
                                     <div className="relative p-6 flex-auto">
                                         <p className="pb-4 my-4 text-slate-500 text-lg leading-relaxed">
-                                            “May your coffee be strong and your Mondays short.”
+                                            {"Let's add a new coffee"}
                                         </p>
                                         <div className="flex flex-col">
-                                            <label htmlFor="name" className="mb-2">Name</label>
+                                            <label htmlFor="name" className="mb-2">What do you want to call it?</label>
                                             <input
-                                                className="mb-4 border-b-2 outline-none"
+                                                className="mb-4 border-amber-800 border-b-2 outline-none"
                                                 id="name"
                                                 name="name"
                                                 type="text"
+                                                placeholder="Name"
                                                 required
                                             />
                                             <label htmlFor="maker" className="mb-2">Maker</label>
                                             <input
-                                                className="mb-4 border-b-2 outline-none"
+                                                className="mb-4 border-amber-800 border-b-2 outline-none"
                                                 id="maker"
                                                 name="maker"
                                                 type="text"
+                                                placeholder="Maker"
                                                 required
                                             />
                                             <label htmlFor="roast" className="mb-2">Roast</label>
                                             <input
-                                                className="mb-4 border-b-2 outline-none"
+                                                className="mb-4 border-amber-800 border-b-2 outline-none"
                                                 id="roast"
                                                 name="roast"
                                                 type="text"
+                                                placeholder="Roast"
                                                 required
                                             />
                                         </div>
+                                        <p className="pb-4 my-4 text-slate-500 text-md leading-relaxed">
+                                            “May your coffee be strong and your Mondays short.”
+                                        </p>
                                     </div>
                                     {/*footer*/}
                                     <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
