@@ -1,7 +1,7 @@
 import React from "react";
 import { trpc } from "../utils/trpc";
 
-export default function AddCoffee({ coffeeMutation }) {
+export default function AddCoffee(props: any) {
     const [showModal, setShowModal] = React.useState(false);
 
     const submitContact = async (event: any) => {
@@ -11,7 +11,7 @@ export default function AddCoffee({ coffeeMutation }) {
             roast: `${event.target.roast.value}`,
             maker: `${event.target.maker.value}`
         }
-        coffeeMutation.mutate(coffee);
+        props.coffeeMutation.mutate(coffee);
         setShowModal(false)
     };
 

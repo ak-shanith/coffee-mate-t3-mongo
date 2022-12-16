@@ -1,9 +1,9 @@
 import React from "react";
 import Image from 'next/image'
 
-export default function CoffeeModal({ data }) {
+export default function CoffeeModal(props: any) {
     const [showModal, setShowModal] = React.useState(false);
-    const [coffee, setCoffee] = React.useState(data)
+    const [coffee, setCoffee] = React.useState(props.data)
 
     return (
         <>
