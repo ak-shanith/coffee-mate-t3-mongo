@@ -17,11 +17,11 @@ export const coffeeRouter = router({
       return ctx.prisma.coffee.create({ data: input });
     }),
   getAll: protectedProcedure.query(({ ctx }) => {
-    // return ctx.prisma.coffee.findMany({
-    //   where: {
-    //     userId: "sfdsgds",
-    //   },
-    // });
-    return ctx.prisma.coffee.findMany();
+    return ctx.prisma.coffee.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
+    // return ctx.prisma.coffee.findMany();
   }),
 });
