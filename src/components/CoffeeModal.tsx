@@ -7,9 +7,9 @@ export default function CoffeeModal(props: any) {
 
     return (
         <>
-            <div className="flex max-w-xs w-64 flex-col gap-4 rounded-xl bg-black/10 p-4 text-black hover:bg-black/20" onClick={() => setShowModal(true)}>
+            <div className="flex max-w-xs w-64 flex-col gap-4 rounded-xl bg-black/10 p-4 text-black hover:bg-black/20 cursor-pointer" onClick={() => setShowModal(true)}>
                 <div>
-                    <h3 className="text-2xl justify-left font-bold text-black">/{coffee?.name}</h3>
+                    <h3 className="break-words text-2xl justify-left font-bold text-black">/{coffee?.name}</h3>
                     <div className="p-5">
                         <Image
                             src="/coffee-cup.png"
@@ -31,7 +31,7 @@ export default function CoffeeModal(props: any) {
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                                    <h3 className="text-3xl font-semibold">
+                                    <h3 className="break-words text-3xl font-semibold">
                                         ☕ /{coffee?.name}
                                     </h3>
                                 </div>
